@@ -1,2 +1,2 @@
 # python-study-hub
-Python study
+My python study
