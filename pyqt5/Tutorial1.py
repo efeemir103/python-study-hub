@@ -4,7 +4,7 @@ import sys
 
 def window():
     app = QApplication(sys.argv) # get arguments from system
-    win = QMainWindow() # Call to our class
+    win = QMainWindow()
     win.setGeometry(200, 200, 300, 300) # xpos, ypos, width, height
     win.setWindowTitle("Test Window 1 Title") # title bar
 
