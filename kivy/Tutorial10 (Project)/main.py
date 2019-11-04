@@ -8,25 +8,36 @@ from kivy.uix.label import Label
 from database import Data, Database
 
 class ActivityEditorWindow(Screen):
-    def __init__(self, item = None):
-        self.desc = ObjectProperty(None)
-        self.date = ObjectProperty(None)
-        self.priority = ObjectProperty(None)
-        if item is None:
+    item = ObjectProperty(None)
+    desc = ObjectProperty(None)
+    date = ObjectProperty(None)
+    priority = ObjectProperty(None)
+    def edit(self):
+        if self.item is None:
             self.desc.text = ""
             self.date.text = ""
             self.priority.text = ""
         else:
-            self.desc.text = item.desc
-            self.dater.text = item.date
-            self.priority.text = item.priority
-    
+            self.desc.text = self.item.desc
+            self.dater.text = self.item.date
+            self.priority.text = self.item.priority
+
     def submit(self):
         db.addItem(Data(self.desc.text, self.date.text, self.priority.text))
 
 
 class MainWindow(Screen):
-    pass
+    activities = []
+    def getSelected(self):
+        return None
+    def editBtn(self):
+        obj = self.getSelected()
+        screens[0].item = obj
+        sm.current = "edit"
+    def deleteBtn(self):
+        obj = self.getSelected()
+        self.activities.remove(obj)
+        
 
 class WindowManager(ScreenManager):
     pass
@@ -38,7 +49,7 @@ screens = [ActivityEditorWindow(name = "edit"), MainWindow(name = "main")]
 for screen in screens:
     sm.add_widget(screen)
 
-sm.current = "main"
+sm.current = "edit"
 
 class MainApp(App):
     def build(self):
